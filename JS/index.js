@@ -1,28 +1,46 @@
-let slideIndex = 1;
-showSlides(slideIndex);
+// Our products/ Key features.
+let slideIndex = [1,1];
 
-function plusSlides(n) {
-  showSlides(slideIndex += n);
+/* Class the members of each slideshow group with different CSS classes */
+let slideId = ["mySlides1", "mySlides2"]
+let textId = ["text1", "text2"]
+showSlides(1, 0);
+showSlides(1, 1);
+
+function plusSlides(n, no) {
+  showSlides(slideIndex[no] += n, no);
 }
 
-function currentSlide(n) {
-  showSlides(slideIndex = n);
-}
-
-function showSlides(n) {
+function showSlides(n, no) {
   let i;
-  let slides = document.getElementsByClassName("mySlides");
-  let dots = document.getElementsByClassName("dot");
+  let x = document.getElementsByClassName(slideId[no]);
+  let y = document.getElementsByClassName(textId[no]);
 
-  if (n > slides.length) {slideIndex = 1}
-  if (n < 1) {slideIndex = slides.length}
-  
-  for (i = 0; i < slides.length; i++) {
-    slides[i].style.display = "none";
+  if (n > x.length) {
+    slideIndex[no] = 1;
   }
-  for (i = 0; i < dots.length; i++) {
-    dots[i].className = dots[i].className.replace(" active", "");
+  if (n < 1) {
+    slideIndex[no] = x.length;
   }
-  slides[slideIndex-1].style.display = "block";
-  dots[slideIndex-1].className += " active";
+
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";
+    y[i].style.display = "none";
+  }
+  x[slideIndex[no]-1].style.display = "block";
+  y[slideIndex[no]-1].style.display = "block";
 }
+
+// Testimonials
+const toggleBtn = document.getElementById("toggle-btn");
+const hiddenCards = document.querySelectorAll(".card.hidden");
+
+let expanded = false;
+
+toggleBtn.addEventListener("click", () => {
+    expanded = !expanded;
+    hiddenCards.forEach(card => {
+        card.style.display = expanded ? "flex" : "none";
+    });
+    toggleBtn.textContent = expanded ? "Show Less" : "Load More";
+});
